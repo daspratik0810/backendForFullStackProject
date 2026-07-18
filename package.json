@@ -1,0 +1,24 @@
+{
+  "name": "backendforfullstackproject",
+  "version": "1.0.0",
+  "description": "A backend for JS FullStack Proj",
+  "keywords": [
+    "javascript",
+    "backend"
+  ],
+  "homepage": "https://github.com/daspratik0810/backendForFullStackProject#readme",
+  "bugs": {
+    "url": "https://github.com/daspratik0810/backendForFullStackProject/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/daspratik0810/backendForFullStackProject.git"
+  },
+  "license": "ISC",
+  "author": "Pratik Das",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
