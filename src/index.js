@@ -1,9 +1,8 @@
 // always use try-catch and async-await in database connection, because it is more professional to catch errors or to take time while connection of database
-
 import mongoose from "mongoose"
 import connectDB from "./db/index.js"
-import dotenv from "dotenv";
 
+import dotenv from "dotenv";
 dotenv.config({ path: "./.env" });
 
 connectDB()
