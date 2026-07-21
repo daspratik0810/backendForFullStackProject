@@ -2,49 +2,38 @@ import mongoose, { Schema } from "mongoose"
 
 const videoSchema = new mongoose.Schema(
     {
-        username : {
-            type : String,
-            required : true,
-            unique : true,
-            lowercase : true,
-            trim : true,
-            index:true
-        },
-        email : {
-            type : String,
-            required : true,
-            unique : true,
-            lowercase : true,
-            trim : true,
-        },
-        fullname : {
-            type : String,
-            required : true,
-            trim : true,
-            index : true
-        },
-        avatar : {
+        videoFile : {
             type : String,  //use cloudinary url
             required : true,
-            unique : true,
-            lowercase : true,
-            trim : true,
         },
-        coverImage : {
-            type : String,  //use cloudinary url
+        thumbnail : {
+            type : String, //use cloudinary url
+            required : true,
+        },
+        title : {
+            type : String,
+            required : true,
+        },
+        descsription : {
+            type : String,  
+            required : true,
+        },
+        duration : {
+            type : Number,  //use cloudinary url
+            required : true 
         }, 
-        watchHistory :  [ 
+        views :  
             {
-                type : Schema.Types.ObjectId,
-                ref : "Video"
-            }
-        ],
-        password : {
-            type : String,
-            required :  [true,"Password is required !!"]
+                type : Number,
+                default : 0
+            },
+        isPlublished : {
+            type : Boolean,
+            default : true
         },
-        refreshToken : {
-            type : String,
+        owner : {
+            type : Schema.Types.ObjectId,
+            ref : "User"
         },     
     }, {timestamps : true}
 )
