@@ -14,13 +14,13 @@ app.use(cors({
 }))
 
 app.use(express.json({limit : "15kb"}))
-//urlencoded : Configures how the URL-encoded body is parsed; it accepts the properties below.
+//URLencoded : Configures how the URL-encoded body is parsed; it accepts the properties below.
 app.use(express.urlencoded({extended :true, limit : "15kb"}))
 
-//express.static : The root directory from which to serve static assets/static files
+//express.static : The root directory from which to serve static assets/static files like images, favicon, etc
 app.use(express.static("public"))
 
-//cookie-parser : Parse Cookie header and populate req.cookies with an object keyed by the cookie names. Optionally you may enable signed cookie support by passing a secret string, which assigns req.secret so it may be used by other middleware.
+//cookie-parser : To access user cookies and set cookies from server ( to perform CRED operation for cookies ).Parse Cookie header and populate req.cookies with an object keyed by the cookie names. Optionally you may enable signed cookie support by passing a secret string, which assigns req.secret so it may be used by other middleware.
 app.use(cookieParser())
 
 
