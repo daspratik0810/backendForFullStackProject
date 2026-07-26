@@ -1,5 +1,6 @@
 //Async functions always return a promise.
-//the promise is resolved with "resolve" or error is caught by catch
+//alternatevely we can also use try-catch and async-await 
+//here the promise is resolved with "resolve" or error is caught by catch
 const asyncHandler = (requestHandler) => {
     (req,res,next) =>{
         //promise has two parts, a resolve and a reject/catch
