@@ -1,5 +1,6 @@
 import { asyncHandler } from "../utils/asyncHandler.js";
-
+import { ApiError } from "../utils/ApiError.js";
+import {User} from "../models/user.model.js"
 const registerUser = asyncHandler( async (req,res) => {
     console.log("registerUser called");  //we will see this message in terminal if POSTMAN or anyone access it, make sure the visibility is public in PORT tab in the bottom here
     //we decide using models ( user.model.js, video.models.js)
@@ -15,14 +16,28 @@ const registerUser = asyncHandler( async (req,res) => {
     // remove password and refresh token field from response
     //check user creation
     //return res
-
+// ---------------------------------------------------------------------------------------------
+    //get users details from frontend
     const {fullName, email, username, password} = req.body
     console.log("email",email);
 
-    if(fullName === ""){
-        throw new 
+    //validation - did user sent empty username or email ? or etc etc
+    //this if condition checks whether given fiels are empty or not, if yes then throw error
+    if(
+        [fullName, email, username, password].some( (field) => field?.trim() === "")
+    ){
+        throw new ApiError(400,"All fields are required")
     }
+
+     //check if user already exists : username or email
+     //we use findOne method, here it finds the user which has matching email/username 
+    const existedUser = User.findOne({
+        $or :  [{ email }, { username }]  //it checks either email or username already is present or not in database
+    })
     
+    if(existedUser){
+        throw new ApiError(409, "User with email or username already exists, please login !!")
+    }
 
 })
 
