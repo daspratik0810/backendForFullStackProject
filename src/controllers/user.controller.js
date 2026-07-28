@@ -1,6 +1,9 @@
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/ApiError.js";
 import {User} from "../models/user.model.js"
+import {uploadOnCloudinary} from "../utils/cloudinary.js"
+
+//we use asyncHandler(or simply async await) because in server it takes time to do the following changes and checks
 const registerUser = asyncHandler( async (req,res) => {
     console.log("registerUser called");  //we will see this message in terminal if POSTMAN or anyone access it, make sure the visibility is public in PORT tab in the bottom here
     //we decide using models ( user.model.js, video.models.js)
@@ -24,7 +27,7 @@ const registerUser = asyncHandler( async (req,res) => {
     //validation - did user sent empty username or email ? or etc etc
     //this if condition checks whether given fiels are empty or not, if yes then throw error
     if(
-        [fullName, email, username, password].some( (field) => field?.trim() === "")
+        [fullName, email, username, password].some( (field) => field ?.trim() === "")
     ){
         throw new ApiError(400,"All fields are required")
     }
@@ -38,6 +41,33 @@ const registerUser = asyncHandler( async (req,res) => {
     if(existedUser){
         throw new ApiError(409, "User with email or username already exists, please login !!")
     }
+
+    //check for images and avatar
+    //user.routes.js
+    const avatarLocalPath = req.files ?.avatar[0] ?.path
+    const coverImageLocalPath = req.files ?.coverImage[0] ?.path
+
+    if(!avatarLocalPath){
+        throw new ApiError(400, "Avatar file is required")
+    }
+
+    //upload them to cloudinary, avatar check
+    const avatar = await uploadOnCloudinary(avatarLocalPath)
+    const coverImage = await uploadOnCloudinary(coverImageLocalPath)
+
+    if(!avatar){
+        throw new ApiError(400, "Avatar file is required")
+    }
+
+    //  create user object - create entry in DB
+    User.create({
+        fullName,
+        avatar:avatar.url,
+        coverImage: coverImage?.url || "",
+        email,
+        password,
+        username : username.toLowerCase()
+    })
 
 })
 
