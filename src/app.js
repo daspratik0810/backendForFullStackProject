@@ -29,7 +29,4 @@ import userRouter from "./routes/user.routes.js"
 //routes declaration, when a user routes itself to /users, then the control goes to userRouter, where /register is routing or using POST to registerUser which passes it to an asyncHandler function and gives status 200 (OK)  
 //http:localhost:8000/api/v1/users/register
 app.use("/api/v1/users",userRouter)
-
-
-
 export {app}
