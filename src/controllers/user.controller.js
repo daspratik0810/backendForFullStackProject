@@ -4,6 +4,7 @@ const registerUser = asyncHandler( async (req,res) => {
     console.log("registerUser called");  //we will see this message in terminal if POSTMAN or anyone access it, make sure the visibility is public in PORT tab in the bottom here
     //we decide using models ( user.model.js, video.models.js)
     //data we get via POSTMAN (for testing)
+
     //get users details from frontend
     //validation - did user sent empty username or email ? or etc etc
     //check if user already exists : username or email
@@ -15,8 +16,13 @@ const registerUser = asyncHandler( async (req,res) => {
     //check user creation
     //return res
 
+    const {fullName, email, username, password} = req.body
+    console.log("email",email);
 
-
+    if(fullName === ""){
+        throw new 
+    }
+    
 
 })
 
