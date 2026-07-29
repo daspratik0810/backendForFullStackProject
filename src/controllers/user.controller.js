@@ -2,6 +2,7 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/ApiError.js";
 import {User} from "../models/user.model.js"
 import {uploadOnCloudinary} from "../utils/cloudinary.js"
+import { ApiResponse } from "../utils/ApiResponse.js";
 
 //we use asyncHandler(or simply async await) because in server it takes time to do the following changes and checks
 const registerUser = asyncHandler( async (req,res) => {
@@ -69,6 +70,21 @@ const registerUser = asyncHandler( async (req,res) => {
         username : username.toLowerCase()
     })
 
+    //check user creation
+    //mongoDB creates automatically "_id" with every successful entry/user, so we are finding it if user is successfully got registered as user or not
+    const createdUser = await User.findById(user._id).select(
+    // remove password and refresh token field from response
+        "-password -refreshToken" //these two fields wont get selected except these two others will get selected, VERY WEIRD SYNTAX
+    ) 
+
+    if(!createdUser){
+        throw new ApiError(500,"Something went Wrong")
+    }
+
+    //return res
+    return res.status(201).json(
+        new ApiResponse(200, createdUser, "User registered Successfully")    
+    )
 })
 
 export {registerUser}
