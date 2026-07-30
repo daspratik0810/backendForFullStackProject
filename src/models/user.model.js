@@ -52,13 +52,13 @@ const userSchema = new mongoose.Schema(
 )
 
 //want to perform the function whenever the data is getting saved, here the function hashes(similar to encryption) the password with 10 hashrounds/salts
-userSchema.pre("save", async function(next) {
-    if( this.isModified("password")) {
-        this.password = await bcrypt.hash(this.password, 10)
-        next()
+userSchema.pre("save", async function () {
+    if (!this.isModified("password")) {
+        return;
     }
-    return next()
-})
+
+    this.password = await bcrypt.hash(this.password, 10);
+});
 
 //custom methods with userSchema
 userSchema.methods.isPasswordCorrect = async function(password){
@@ -92,4 +92,4 @@ userSchema.methods.generateRefreshToken = function(){
 }
 
 
-export const User = mongoose.model(User,userSchema)
+export const User = mongoose.model("User",userSchema)

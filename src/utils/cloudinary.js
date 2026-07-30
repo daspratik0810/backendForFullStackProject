@@ -1,6 +1,10 @@
 import { v2 as cloudinary } from 'cloudinary';
-import { response } from 'express';
+
 import fs from "fs"
+
+console.log("Cloud Name:", process.env.CLOUDINARY_CLOUD_NAME);
+console.log("API Key:", process.env.CLOUDINARY_API_KEY);
+console.log("API Secret:", process.env.CLOUDINARY_API_SECRET);
 
 // Configuration
 cloudinary.config({ 
@@ -19,8 +23,10 @@ const uploadOnCloudinary = async (localFilePath) => {
             resource_type : "auto"
         })
         //file has been uploaded successfully
-        console.log("File has been uploaded on cloudinary successfully !!",response.url);
-        return response
+        console.log("File has been uploaded on cloudinary successfully!!",
+        uploadResult.url
+        );
+        return uploadResult;
     } catch (error){
         console.log(error);
         //to remove/unlink the file from localserver as upload got failed
