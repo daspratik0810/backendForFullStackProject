@@ -43,10 +43,20 @@ const registerUser = asyncHandler( async (req,res) => {
         throw new ApiError(409, "User with email or username already exists, please login !!")
     }
 
+    //console.log(req.files); it is to check the files/images that we upload
+    
+
     //check for images and avatar
     //user.routes.js
     const avatarLocalPath = req.files ?.avatar[0] ?.path
-    const coverImageLocalPath = req.files ?.coverImage[0] ?.path
+    //const coverImageLocalPath = req.files ?.coverImage[0] ?.path
+
+    //a check for the empty and if the coverImage is array or not
+    let coverImageLocalPath
+    if(req.files && Array.isArray(req.files.coverImage) && req.files.coverImage.length > 0){
+        coverImageLocalPath = req.files.coverImage[0].path
+    }
+
 
     if(!avatarLocalPath){
         throw new ApiError(400, "Avatar file is required")
