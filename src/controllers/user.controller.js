@@ -83,8 +83,9 @@ const registerUser = asyncHandler( async (req,res) => {
     //check user creation
     //mongoDB creates automatically "_id" with every successful entry/user, so we are finding it if user is successfully got registered as user or not
     const createdUser = await User.findById(user._id).select(
-    // remove password and refresh token field from response
-        "-password -refreshToken" //these two fields wont get selected except these two others will get selected, VERY WEIRD SYNTAX
+    // remove password and refresh token field from response, refresh tokens are expired after long time, and access token are expiered for short time
+    // access tokens(short lived) are used for authentication of the user, and refresh token(long lived) are to talk to database and forauthentication tasks  
+    "-password -refreshToken" //these two fields wont get selected except these two others will get selected, VERY WEIRD SYNTAX
     ) 
 
     if(!createdUser){
