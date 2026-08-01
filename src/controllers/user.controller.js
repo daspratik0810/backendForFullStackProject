@@ -98,5 +98,16 @@ const registerUser = asyncHandler( async (req,res) => {
     )
 })
 
-export {registerUser}
+const loginUser = asyncHandler(async (req,res) => {
+    //bring data from req body 
+    // username or email same hona chhaiye
+    // find the user
+    // if not then error, if user exists then password check
+    // access and refresh token generation
+    //send tokens via secure cookie
+    // send final response 
+
+})
+
+export {registerUser, loginUser}
 
