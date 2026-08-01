@@ -153,9 +153,10 @@ const loginUser = asyncHandler(async (req,res) => {
     }
     
     // access and refresh token generation
+   const {accessToken, refreshToken} = await generateAccessAndRefreshTokens(user._id)
 
-
-
+    //send tokens via secure cookie
+    
 
 
 
