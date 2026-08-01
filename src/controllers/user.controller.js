@@ -156,7 +156,31 @@ const loginUser = asyncHandler(async (req,res) => {
    const {accessToken, refreshToken} = await generateAccessAndRefreshTokens(user._id)
 
     //send tokens via secure cookie
-    
+    const loggedInUser = await User.findById(user._id).
+    select("-password -refreshToken")       //dont send password and refreshToken to user
+    // - sending cookies 
+    const options = {
+        httpOnly : true,
+        secure: true
+    }
+
+    // send final response 
+    return res
+    .status(200)
+    .cookie("accessToken",accessToken, options)
+    .cookie("refreshToken",refreshToken, options)
+    .json(
+        new ApiResponse(200,{
+            user : loggedInUser, accessToken, refreshToken  
+        }, "User logged in Seccessfully !!"
+        )
+    )
+
+    //logout the user
+
+    const logoutUser = asyncHandler(async(req, res) => {
+        
+    })
 
 
 
