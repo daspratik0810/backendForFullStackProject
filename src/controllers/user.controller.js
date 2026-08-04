@@ -370,7 +370,68 @@ const getUserChannelProfile = asyncHandler(async(req,res) => {
         throw new ApiError(400,"Username is missing !!")
     }
 
-   
+    //aggregation pipeline of mongoDB
+    const channel = await User.aggregate([
+        //pipeline/document 1 : it filters the channel based on username (thats why we used $match)
+        {
+            $match : {
+                username : username?.toLowerCase()
+            }
+        },
+        // pipeline/document 2 : it is based on document 1, ie, it has input field from document 1. Now we use $lookup to get the subscribers, which are subscribed to the user/channel
+        {
+             $lookup:{
+                from : "subscriptions", //it is coming from "Subscription" from subscription.model.js
+                localFields: "_id",
+                foreignField:"channel",
+                as:"subscribers"
+             }
+        },
+        // pipeline/document 3  : it is based on document 2, ie, it has input field from document 2. Now we use $lookup to get the subscribed channels
+        {
+             $lookup:{
+                from : "subscriptions", //it is coming from "Subscription" from subscription.model.js
+                localFields: "_id",
+                foreignField:"subscriber",
+                as:"subscribedTo"
+             }
+        },
+        // pipeline/document 4  : it is based on document 3, ie, it has input field from document 3. Now we use $addFields to add both fields from doc 2 and 3
+        {
+             $addFields:{
+
+               subscribersCount : {
+                $size: "$subscribers"
+               },
+
+               channelsSubscribedToCount : {
+                $size: "$subscribedTo"
+               },
+
+               isSubscribed : {
+                $cond: {
+                    if : {$in:[req.user?._id,"$subscribers.subscriber"]},
+                    then :true,
+                    else:false
+                } 
+               },
+             }
+        },
+        // pipeline/document 5  : it is based on document 4, ie, it has input field from document 4. Now we use $projects to pass on only the values that we want, the value that we want to pass we say 1(it will turn on the passing flag)
+        {
+             $projects:{
+                fullName :1,
+                username :1,
+                subscribersCount :1,
+                channelsSubscribedToCount:1,
+                isSubscribed :1,
+                avatar :1,
+                coverImage :1,
+                email :1,
+             }
+        },
+
+    ])  
 
 
 })
