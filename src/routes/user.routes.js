@@ -28,9 +28,10 @@ router.route("/login").post(loginUser)
 //secure routes. After next() of verifyJWT, it will go to logoutUser. Hence logoutUser can only be routed to the users who are verified(loggedin)
 router.route("/logout").post(verifyJWT, logoutUser)
 router.route("/refresh-token").post(refreshAccessToken)
-router.route("/change-password").post(verifyJWT,changeCurrentPassword) // . Hence here aswell changeCurrentPassword can only be routed to the users who are verified(loggedin), thats why we used verifyJWT
-router.route("/current-user").get(verifyJWT,getCurrentUser) // . Hence here aswell getCurrentUser can only be routed to the users who are verified(loggedin), thats why we used verifyJWT
-router.route("/update-account").patch(verifyJWT,updateAccountDetails) // . Hence here aswell updateAccountDetails can only be routed to the users who are verified(loggedin), thats why we used verifyJWT
+router.route("/change-password").post(verifyJWT,changeCurrentPassword) // Hence here aswell changeCurrentPassword can only be routed to the users who are verified(loggedin), thats why we used verifyJWT
+router.route("/current-user").get(verifyJWT,getCurrentUser) // Hence here aswell getCurrentUser can only be routed to the users who are verified(loggedin), thats why we used verifyJWT
+router.route("/update-account").patch(verifyJWT,updateAccountDetails) // Hence here aswell updateAccountDetails can only be routed to the users who are verified(loggedin), thats why we used verifyJWT
+router.route("/avatar").patch(verifyJWT,upload.single("avatar"))// Hence here aswell upload.single("avatar") can only be routed to the users who are verified(loggedin), thats why we used verifyJWT, also upload.single("avatar") is used to upload a single file with the name "avatar"
  
 
 export default router
