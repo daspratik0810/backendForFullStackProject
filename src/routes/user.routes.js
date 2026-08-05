@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { changeCurrentPassword, getCurrentUser, getUserChannelProfile, loginUser, logoutUser, registerUser, updateAccountDetails, updateUserAvatar, updateUserCoverImage } from "../controllers/user.controller.js";
+import { changeCurrentPassword, getCurrentUser, getUserChannelProfile, getWatchHistory, loginUser, logoutUser, registerUser, updateAccountDetails, updateUserAvatar, updateUserCoverImage } from "../controllers/user.controller.js";
 import {upload} from "../middlewares/multer.middleware.js"
 import { verifyJWT } from "../middlewares/auth.middleware.js";
 import { refreshAccessToken } from "../controllers/user.controller.js";
@@ -34,6 +34,7 @@ router.route("/update-account").patch(verifyJWT,updateAccountDetails) // Hence h
 router.route("/avatar").patch(verifyJWT,upload.single("avatar"),updateUserAvatar)// Hence here aswell updateUserAvatar can only be routed to the users who are verified(loggedin), thats why we used verifyJWT, also upload.single("avatar") is used to upload a single file with the name "avatar"
 router.route("/cover-image").patch(verifyJWT,upload.single("/coverImage"),updateUserCoverImage)// Hence here aswell updateUserCoverImage can only be routed to the users who are verified(loggedin), thats why we used verifyJWT, also upload.single("/coverImage") is used to upload a single file with the name "coverImage"
 router.route("/c/:username").get(verifyJWT,getUserChannelProfile) // Hence here aswell getUserChannelProfile can only be routed to the users who are verified(loggedin), thats why we used verifyJWT
+router.route("/history").get(verifyJWT,getWatchHistory) // Hence here aswell getWatchHistory can only be routed to the users who are verified(loggedin), thats why we used verifyJWT
 
 
 export default router
