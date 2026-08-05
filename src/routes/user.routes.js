@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { changeCurrentPassword, getCurrentUser, loginUser, logoutUser, registerUser, updateAccountDetails } from "../controllers/user.controller.js";
+import { changeCurrentPassword, getCurrentUser, loginUser, logoutUser, registerUser, updateAccountDetails, updateUserAvatar } from "../controllers/user.controller.js";
 import {upload} from "../middlewares/multer.middleware.js"
 import { verifyJWT } from "../middlewares/auth.middleware.js";
 import { refreshAccessToken } from "../controllers/user.controller.js";
@@ -31,7 +31,7 @@ router.route("/refresh-token").post(refreshAccessToken)
 router.route("/change-password").post(verifyJWT,changeCurrentPassword) // Hence here aswell changeCurrentPassword can only be routed to the users who are verified(loggedin), thats why we used verifyJWT
 router.route("/current-user").get(verifyJWT,getCurrentUser) // Hence here aswell getCurrentUser can only be routed to the users who are verified(loggedin), thats why we used verifyJWT
 router.route("/update-account").patch(verifyJWT,updateAccountDetails) // Hence here aswell updateAccountDetails can only be routed to the users who are verified(loggedin), thats why we used verifyJWT
-router.route("/avatar").patch(verifyJWT,upload.single("avatar"))// Hence here aswell upload.single("avatar") can only be routed to the users who are verified(loggedin), thats why we used verifyJWT, also upload.single("avatar") is used to upload a single file with the name "avatar"
+router.route("/avatar").patch(verifyJWT,upload.single("avatar"),updateUserAvatar)// Hence here aswell updateUserAvatar can only be routed to the users who are verified(loggedin), thats why we used verifyJWT, also upload.single("avatar") is used to upload a single file with the name "avatar"
  
 
 export default router
