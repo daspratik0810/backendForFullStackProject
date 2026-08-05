@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { changeCurrentPassword, getCurrentUser, loginUser, logoutUser, registerUser } from "../controllers/user.controller.js";
+import { changeCurrentPassword, getCurrentUser, loginUser, logoutUser, registerUser, updateAccountDetails } from "../controllers/user.controller.js";
 import {upload} from "../middlewares/multer.middleware.js"
 import { verifyJWT } from "../middlewares/auth.middleware.js";
 import { refreshAccessToken } from "../controllers/user.controller.js";
@@ -7,6 +7,7 @@ import { refreshAccessToken } from "../controllers/user.controller.js";
 const router = Router()
 
 //this /register can only handle POST request (use POSTMAN)
+//POST is used to create a brand-new resource, while PATCH is used to partially update an existing resource. 
 router.route("/register").post(
     //multer middleware
     upload.fields([
@@ -29,6 +30,7 @@ router.route("/logout").post(verifyJWT, logoutUser)
 router.route("/refresh-token").post(refreshAccessToken)
 router.route("/change-password").post(verifyJWT,changeCurrentPassword) // . Hence here aswell changeCurrentPassword can only be routed to the users who are verified(loggedin), thats why we used verifyJWT
 router.route("/current-user").get(verifyJWT,getCurrentUser) // . Hence here aswell getCurrentUser can only be routed to the users who are verified(loggedin), thats why we used verifyJWT
+router.route("/update-account").patch(verifyJWT,updateAccountDetails) // . Hence here aswell updateAccountDetails can only be routed to the users who are verified(loggedin), thats why we used verifyJWT
  
 
 export default router
