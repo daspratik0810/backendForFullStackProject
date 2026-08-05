@@ -1,3 +1,7 @@
+// VVI FLOW - user.routes.js ---> user.controller.js
+//whatever methods and functions are set to be called after a route in user.routes.js, it is defined in  user.controller.js
+
+
 import { Router } from "express";
 import { loginUser, logoutUser, registerUser, refreshAccessToken, changeCurrentPassword, getCurrentUser, updateUserAvatar, updateUserCoverImage, getUserChannelProfile, getWatchHistory } from "../controllers/user.controller.js";
 import { upload } from "../middlewares/multer.middleware.js"
