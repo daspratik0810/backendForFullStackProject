@@ -25,7 +25,7 @@ const generateAccessAndRefreshTokens = async(userId) =>{
 }
 
 //we use asyncHandler(or simply async await) because in server it takes time to do the following changes and checks
-const registerUser = asyncHandler( async (req,res) => {
+const registerUse = asyncHandler( async (req,res) => {
     console.log("registerUser called");  //we will see this message in terminal if POSTMAN or anyone access it, make sure the visibility is public in PORT tab in the bottom here
     //we decide using models ( user.model.js, video.models.js)
     //data we get via POSTMAN (for testing)
