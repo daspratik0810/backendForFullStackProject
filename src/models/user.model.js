@@ -1,3 +1,4 @@
+//MOST COMPLICATED MODELS. User models are always bit complicated, because it has hooks (pre),hasing of password, check for password correctness (isPasswordCorrect), generateAccessToken and generateRefreshToken
 import mongoose, { Schema } from "mongoose"
 import jwt from "jsonwebtoken"
 import bcrypt from "bcrypt"
