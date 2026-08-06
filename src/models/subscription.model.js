@@ -1,8 +1,8 @@
 import mongoose,{Schema} from "mongoose";
 
-const subscriptionSchema = new Schema({
+const subscriptionSchema = ew Schema({
     subscriber :{
-        type:Schema.Types.ObjectId, //who is subscribing
+        type:Schema.Types.jectId, //who is subscribing
         ref:"User",
     },
     channel :{
