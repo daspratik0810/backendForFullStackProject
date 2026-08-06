@@ -13,7 +13,7 @@ app.use(cors({
     credentials: true 
 }))
 
-app.use(express.json({limit : "15kb"}))
+app.use(express.json({limit : "50mb"}))
 //URLencoded : Configures how the URL-encoded body is parsed; it accepts the properties below.
 app.use(express.urlencoded({extended :true, limit : "15kb"}))
 
@@ -25,8 +25,26 @@ app.use(cookieParser())
 
 //routes(routers) import
 import userRouter from "./routes/user.routes.js"
+import commentRouter from "./routes/comment.routes.js";
+import likeRouter from "./routes/like.routes.js";
+import subscriptionRouter from "./routes/subscription.routes.js";
+import tweetRouter from "./routes/tweet.routes.js";
+import videoRouter from "./routes/video.routes.js";
+import healthcheckRouter from "./routes/healthcheck.routes.js";
+import playlistRouter from "./routes/playlist.routes.js";
+import dashboardRouter from "./routes/dashboard.routes.js";
 
 //routes declaration, when a user routes itself to /users, then the control goes to userRouter, where /register is routing or using POST to registerUser which passes it to an asyncHandler function and gives status 200 (OK)  
 //http:localhost:8000/api/v1/users/register
 app.use("/api/v1/users",userRouter)
+app.use("/api/v1/comment", commentRouter);
+app.use("/api/v1/likes", likeRouter);
+app.use("/api/v1/subscriptions", subscriptionRouter);
+app.use("/api/v1/tweet", tweetRouter);
+app.use("/api/v1/video", videoRouter);
+app.use("/api/v1/healthcheck", healthcheckRouter);
+app.use("/api/v1/playlist", playlistRouter);
+app.use("/api/v1/dashboard", dashboardRouter);
+
+
 export {app}

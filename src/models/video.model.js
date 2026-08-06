@@ -45,4 +45,4 @@ const videoSchema = new mongoose.Schema(
 
 //mongooseAggregatePaginate ability to control and paginate, from where to where need to give/show videos
 videoSchema.plugin(mongooseAggregatePaginate) 
-export const Video = mongoose.model(Video,videoSchema)
+export const Video = mongoose.model("Video", videoSchema)
