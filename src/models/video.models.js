@@ -42,5 +42,7 @@ const videoSchema = new mongoose.Schema(
 //A plugin is simply a packaging mechanism. It is a way to bundle up reusable Mongoose code (like adding fields, methods, or hooks) into a single JavaScript function so you can easily apply it to multiple different Schemas.
 //In Mongoose, "hooks" and "middleware" mean the exact same thing. A hook is a function that tells Mongoose: "Hey, before (or after) you run a database operation, stop and run this custom code first." * schema.pre() is a "pre-hook" (runs before the database operation)
 //schema.post() is a "post-hook" (runs after the database operation). 
+
+//mongooseAggregatePaginate ability to control and paginate, from where to where need to give/show videos
 videoSchema.plugin(mongooseAggregatePaginate) 
 export const Video = mongoose.model(Video,videoSchema)
